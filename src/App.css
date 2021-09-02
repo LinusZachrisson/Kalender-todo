@@ -4,7 +4,16 @@
 } */
 
 .calendar {
-  margin-left: 450px;
-  width: 1000px;
-  margin-top: 50px;
+  position: relative;
+  z-index: 0;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+.calendar-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Nunito", sans-serif;
 }
