@@ -1,39 +1,18 @@
 //import { eventTupleToStore } from "@fullcalendar/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./addTodo.css";
 
-// const AddTodo = () => {
-//   const [todos, setTodos] = useState([
-//     { title: "todo 1", date: "2021-09-01" },
-//     { title: "todo 2", date: "2021-09-02" },
-//   ]);
+const AddTodo = ({ closeAddTodo, date }) => {
+  const [todos, setTodos] = useState([{ title: "dasdsa", date: "" }]);
+  const [value, setValue] = useState("");
 
-//   const handleOnSubmit = (e) => {
-//     e.preventDefault();
-//     setTodos(...todos);
-//   };
-
-//   return prompt(
-//     <form onSubmit={handleOnSubmit}>
-//       <input
-//         type="text"
-//         value={todos.title}
-//         placeholder="Add todo"
-//         onChange={(evt) => setTodos({ todos, title: evt.target.value })}
-//       />
-//       <button>Submit todo</button>
-//     </form>
-//   );
-// };
-
-const AddTodo = ({ closeAddTodo }) => {
-  const [todos, setTodos] = useState([
-    { title: "", date: "" },
-    { title: "", date: "" },
-  ]);
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   const submitTodo = () => {
-    console.log(todos);
+    const newTodos = [...todos, { title: value, date: date }];
+    setTodos(newTodos);
   };
 
   return (
@@ -46,12 +25,12 @@ const AddTodo = ({ closeAddTodo }) => {
           <h1>Add a todo</h1>
         </div>
         <div className="body">
-          <h2>Date</h2>
+          <h2>{`${date}`}</h2>
           <input
             type="text"
             placeholder="Add todo"
-            value={todos}
-            onChange={(evt) => setTodos(evt.target.value)}
+            value={value}
+            onChange={(evt) => setValue(evt.target.value)}
           />
         </div>
         <div className="footer">
