@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from "react";
 import "./addTodo.css";
 
-const AddTodo = ({ closeAddTodo, date }) => {
-  const [todos, setTodos] = useState([{ title: "dasdsa", date: "" }]);
+const AddTodo = ({ closeAddTodo, date, addTodo }) => {
   const [value, setValue] = useState("");
 
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
+  // useEffect(() => {
+  //   console.log(todos);
+  // }, [todos]);
 
   const submitTodo = () => {
-    const newTodos = [...todos, { title: value, date: date }];
-    setTodos(newTodos);
+    addTodo(value);
+    closeAddTodo(false);
   };
 
   return (

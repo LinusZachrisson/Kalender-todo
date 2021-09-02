@@ -5,9 +5,15 @@ import listPlugin from "@fullcalendar/list";
 import React, { useState } from "react";
 import AddTodo from "./AddTodo";
 
-function Calendar({ todos }) {
+function Calendar() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
+  const [todos, setTodos] = useState([]);
   const [date, setDate] = useState("");
+
+  const addTodo = (e) => {
+    const newTodos = [...todos, { title: e, date: date }];
+    setTodos(newTodos);
+  };
 
   return (
     <div className="calendar-wrapper">
@@ -29,7 +35,7 @@ function Calendar({ todos }) {
         />
       </div>
       {openAddTodo && date && (
-        <AddTodo date={date} closeAddTodo={setOpenAddTodo} />
+        <AddTodo date={date} addTodo={addTodo} closeAddTodo={setOpenAddTodo} />
       )}
     </div>
   );
