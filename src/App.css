@@ -6,6 +6,8 @@
 .calendar {
   position: relative;
   z-index: 0;
+  width: 60%;
+  margin-top: 20px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");

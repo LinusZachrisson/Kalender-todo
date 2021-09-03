@@ -25,7 +25,9 @@ const AddTodo = ({ closeAddTodo, date, addTodo }) => {
         </div>
         <div className="body">
           <h2>{`${date}`}</h2>
+          <br />
           <input
+            className="add-todo-input"
             type="text"
             placeholder="Add todo"
             value={value}

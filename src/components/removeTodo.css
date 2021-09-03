@@ -1,16 +1,6 @@
-.popup-background {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(200, 200, 200);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.todo-container {
+.remove-todo-container {
   width: 500px;
-  height: 400px;
+  height: 300px;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -19,7 +9,7 @@
   padding: 25px;
 }
 
-.todo-container .title {
+.remove-todo-container .title {
   display: inline-block;
   text-align: center;
   margin-top: 10px;
@@ -38,20 +28,23 @@
   cursor: pointer;
 }
 
-.todo-container .body {
+.remove-todo-container .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   text-align: center;
 }
 
-.todo-container .footer {
+.remove-todo-container .footer {
   flex: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.todo-container .footer button {
+.remove-todo-container .footer button {
   width: 150px;
   height: 45px;
   margin: 10px;
@@ -62,21 +55,7 @@
   font-size: 20px;
   cursor: pointer;
 }
-.add-todo-input {
-  font-family: "Roboto", sans-serif;
-  color: #333;
-  font-size: 1.2rem;
-  margin: 0 auto;
-  padding: 1.5rem 2rem;
-  border-radius: 0.2rem;
-  background-color: rgb(200, 199, 199);
-  border: none;
-  width: 70%;
-  display: block;
-  border-bottom: 0.3rem solid transparent;
-  transition: all 0.3s;
-}
 
-#cancelBtn {
-  background-color: crimson;
+#doneBtn {
+  background-color: green;
 }
