@@ -59,3 +59,7 @@
 #doneBtn {
   background-color: green;
 }
+
+#cancelRemoveTodoBtn {
+  background-color: crimson;
+}

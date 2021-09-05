@@ -8,19 +8,49 @@ import RemoveTodo from "./RemoveTodo";
 
 function Calendar() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    { title: "fotboll", date: "2021-09-15", complete: false },
+    { title: "diska", date: "2021-09-16", complete: true },
+  ]);
+  const [todo, setTodo] = useState({});
   const [date, setDate] = useState("");
   const [openRemoveTodo, setOpenRemoveTodo] = useState(false);
+  const [id, setId] = useState("");
+  const [todoDate, setTodoDate] = useState("");
+  const [todoTitle, setTodoTitle] = useState("");
 
-  const addTodo = (e) => {
-    const newTodos = [...todos, { title: e, date: date }];
-    setTodos(newTodos);
+  const renderEventContent = (eventInfo) => {
+    const todo = todos.find((t) => t.title === eventInfo.event.title);
+    todo.complete
+      ? (eventInfo.backgroundColor = "green")
+      : (eventInfo.backgroundColor = "blue");
+
+    console.log(eventInfo);
+    console.log(todo);
   };
 
-  const handleEventClick = () => {
-    alert(
-      `Todo: ${todos[0].title} Deadline: ${todos[0].date} <button>Delete todo</button>`
-    );
+  const addTodo = (e) => {
+    const newTodos = [...todos, { title: e, date: date, id: id }];
+    setTodos(newTodos);
+    console.log(newTodos);
+  };
+
+  const removeTodo = (e) => {
+    const newTodos = todos.filter((todo) => e.title !== todo.title);
+    setTodos(newTodos);
+    console.log(e);
+  };
+
+  const toggleCompleteTodo = (e) => {
+    const newTodos = todos.map((t) => {
+      if (t.title === e.title) {
+        t.complete = !t.complete;
+      }
+      return t;
+    });
+    setTodos(newTodos);
+    console.log(newTodos);
+    console.log(e);
   };
 
   return (
@@ -31,10 +61,17 @@ function Calendar() {
           dateClick={(e) => {
             setOpenAddTodo(true);
             setDate(e.dateStr);
+            setId(Math.floor(Math.random() * 10000));
           }}
-          eventClick={() => {
+          eventClick={(e) => {
+            const td = todos.filter((t) => t.title === e.el.textContent);
+            setTodo(td[0]);
+            setTodoTitle(td[0].title);
+            setTodoDate(td[0].date);
             setOpenRemoveTodo(true);
           }}
+          eventContent={renderEventContent}
+          dayMaxEventRows="true"
           selectable="true"
           initialView="dayGridMonth"
           headerToolbar={{
@@ -50,9 +87,13 @@ function Calendar() {
       )}
       {openRemoveTodo && date && (
         <RemoveTodo
-          date={date}
-          todos={todos}
+          todoTitle={todoTitle}
+          date={todoDate}
+          todo={todo}
           closeRemoveTodo={setOpenRemoveTodo}
+          id={id}
+          removeTodo={removeTodo}
+          toggleCompleteTodo={toggleCompleteTodo}
         />
       )}
     </div>
