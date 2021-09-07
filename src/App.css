@@ -6,8 +6,10 @@
 .calendar {
   position: relative;
   z-index: 0;
-  width: 60%;
-  margin-top: 20px;
+  width: 85%;
+  margin-top: 40px;
+  text-align: center;
+  margin-left: 8%;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
@@ -18,4 +20,14 @@
   align-items: center;
   flex-direction: column;
   font-family: "Nunito", sans-serif;
+  background-image: url("./img/calendar-bg1.jpg");
+}
+
+.calendar-border {
+  background-color: rgb(255, 255, 255);
+  width: 60%;
+  height: 90%;
+  border: 1px solid rgb(243, 243, 243);
+  border-radius: 70px;
+  margin-top: 1%;
 }

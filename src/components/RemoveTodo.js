@@ -21,6 +21,7 @@ const RemoveTodo = ({
 
   const completeTodo = () => {
     toggleCompleteTodo(todo);
+    closeRemoveTodo(false);
   };
 
   return (
@@ -40,7 +41,7 @@ const RemoveTodo = ({
             Done &#x2713;
           </button>
           <button id="removeCancelTodoBtn" onClick={deleteTodo}>
-            Remove
+            Remove todo
           </button>
         </div>
       </div>

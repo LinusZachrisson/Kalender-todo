@@ -5,10 +5,6 @@ import "./addTodo.css";
 const AddTodo = ({ closeAddTodo, date, addTodo }) => {
   const [value, setValue] = useState("");
 
-  // useEffect(() => {
-  //   console.log(todos);
-  // }, [todos]);
-
   const submitTodo = () => {
     addTodo(value);
     closeAddTodo(false);
