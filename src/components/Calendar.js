@@ -6,16 +6,27 @@ import React, { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import RemoveTodo from "./RemoveTodo";
 
+import { v4 as uuidv4 } from "uuid";
+
 function Calendar() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
   const [todos, setTodos] = useState([
-    { title: "fotboll", date: "2021-09-15", complete: false },
-    { title: "diska", date: "2021-09-16", complete: true },
+    {
+      title: "fotboll",
+      date: "2021-09-15",
+      complete: false,
+      id: uuidv4(),
+    },
+    {
+      title: "diska",
+      date: "2021-09-16",
+      complete: true,
+      id: uuidv4(),
+    },
   ]);
   const [todo, setTodo] = useState({});
   const [date, setDate] = useState("");
   const [openRemoveTodo, setOpenRemoveTodo] = useState(false);
-  const [id, setId] = useState("");
   const [todoDate, setTodoDate] = useState("");
   const [todoTitle, setTodoTitle] = useState("");
 
@@ -28,7 +39,7 @@ function Calendar() {
   });
 
   const renderEventContent = (eventInfo) => {
-    const todo = todos.find((t) => t.title === eventInfo.event.title);
+    const todo = todos.find((t) => t.id === eventInfo.event._def.publicId);
     todo.complete
       ? (eventInfo.backgroundColor = "green")
       : (eventInfo.backgroundColor = "blue");
@@ -51,26 +62,32 @@ function Calendar() {
   };
 
   const addTodo = (e) => {
-    const newTodos = [...todos, { title: e, date: date, id: id }];
+    const newTodos = [
+      ...todos,
+      { title: e, date: date, complete: false, id: uuidv4() },
+    ];
     setTodos(newTodos);
     console.log("added todo:", newTodos);
   };
 
   const removeTodo = (e) => {
-    const newTodos = todos.filter((todo) => e.title !== todo.title);
+    const newTodos = todos.filter((t) => t.id !== e.id);
     setTodos(newTodos);
     console.log(e);
   };
 
   const toggleCompleteTodo = (e) => {
-    const newTodos = todos.map((t) => {
-      if (t.title === e.title) {
-        t.complete = !t.complete;
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === e.id) {
+        return {
+          ...todo,
+          complete: !todo.complete,
+        };
       }
-      return t;
+      return todo;
     });
-    setTodos(newTodos);
-    console.log(newTodos);
+    setTodos(updatedTodos);
+    console.log(updatedTodos);
     console.log(e);
   };
 
@@ -83,13 +100,12 @@ function Calendar() {
             dateClick={(e) => {
               setOpenAddTodo(true);
               setDate(e.dateStr);
-              setId(Math.floor(Math.random() * 10000));
             }}
             eventClick={(e) => {
-              const td = todos.filter((t) => t.title === e.el.textContent);
-              setTodo(td[0]);
-              setTodoTitle(td[0].title);
-              setTodoDate(td[0].date);
+              const td = todos.find((t) => t.id === e.event._def.publicId);
+              setTodo(td);
+              //setTodoTitle(td[0].title);
+              //setTodoDate(td[0].date);
               setOpenRemoveTodo(true);
             }}
             eventContent={renderEventContent}
@@ -101,7 +117,7 @@ function Calendar() {
               center: "title",
               right: "dayGridMonth, dayGridWeek, dayGridDay, listYear",
             }}
-            events={todos}
+            events={todos.map((t) => t)}
           />
         </div>
       </div>
@@ -111,10 +127,9 @@ function Calendar() {
       {openRemoveTodo && date && (
         <RemoveTodo
           todoTitle={todoTitle}
-          date={todoDate}
+          date={todo.date}
           todo={todo}
           closeRemoveTodo={setOpenRemoveTodo}
-          id={id}
           removeTodo={removeTodo}
           toggleCompleteTodo={toggleCompleteTodo}
         />

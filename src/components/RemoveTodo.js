@@ -6,16 +6,13 @@ import "./removeTodo.css";
 const RemoveTodo = ({
   closeRemoveTodo,
   date,
-  todos,
-  id,
-  todoTitle,
   removeTodo,
   todo,
   toggleCompleteTodo,
 }) => {
   const deleteTodo = () => {
     removeTodo(todo);
-    console.log(todoTitle);
+    //console.log(todoTitle);
     closeRemoveTodo(false);
   };
 
@@ -31,7 +28,7 @@ const RemoveTodo = ({
           <button onClick={() => closeRemoveTodo(false)}> X </button>
         </div>
         <div className="title">
-          <h1>{`Todo: ${todoTitle}`}</h1>
+          <h1>{`Todo: ${todo.title}`}</h1>
         </div>
         <div className="body">
           <h2>{`Deadline: ${date}`}</h2>
