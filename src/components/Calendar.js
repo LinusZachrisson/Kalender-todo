@@ -7,55 +7,25 @@ import AddTodo from "./AddTodo";
 import RemoveTodo from "./RemoveTodo";
 
 import { v4 as uuidv4 } from "uuid";
-import FetchApi from "./FetchApi";
 
 function Calendar() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
-  const [todos, setTodos] = useState([
-    {
-      title: "fotboll",
-      date: "2021-09-15",
-      complete: false,
-      id: uuidv4(),
-    },
-    {
-      title: "diska",
-      date: "2021-09-16",
-      complete: true,
-      id: uuidv4(),
-    },
-  ]);
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.getItem("todos")) || []
+  );
   const [todo, setTodo] = useState({});
   const [date, setDate] = useState("");
   const [openRemoveTodo, setOpenRemoveTodo] = useState(false);
-  const [todoTitle, setTodoTitle] = useState("");
 
   useEffect(() => {
-    getSavedTodosFromLocalStorage();
-  }, []);
-
-  useEffect(() => {
-    saveTodosToLocalStorage();
-  });
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const renderEventContent = (eventInfo) => {
     const todo = todos.find((t) => t.id === eventInfo.event._def.publicId);
     todo.complete
       ? (eventInfo.backgroundColor = "green")
       : (eventInfo.backgroundColor = "blue");
-  };
-
-  const saveTodosToLocalStorage = () => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  };
-
-  const getSavedTodosFromLocalStorage = () => {
-    if (localStorage.getItem("todos") === null) {
-      localStorage.setItem("todos", JSON.stringify([{}]));
-    } else {
-      let savedTodos = JSON.parse(localStorage.getItem("todos"));
-      setTodos(savedTodos);
-    }
   };
 
   const addTodo = (e) => {
@@ -88,6 +58,41 @@ function Calendar() {
     console.log(e);
   };
 
+  const fetchHolidays = () => {
+    fetch(`http://sholiday.faboul.se/dagar/v2.1/2021`)
+      .then((response) => response.json())
+      .then((data) => {
+        holiday(data.dagar);
+      });
+  };
+
+  useEffect(() => {
+    fetchHolidays();
+  }, []);
+
+  const holiday = (dag) => {
+    const holidays = dag.filter((dag) => dag.helgdag);
+    console.log("holidays", holidays);
+
+    const specialDays = [];
+
+    holidays.map((x) =>
+      specialDays.push({
+        title: x.helgdag,
+        date: x.datum,
+        id: uuidv4(),
+        display: "background",
+        color: "red",
+      })
+    );
+
+    const specialEventsDisplay = [...todos, ...specialDays];
+
+    console.log(specialDays);
+
+    setTodos(specialEventsDisplay);
+  };
+
   return (
     <div className="calendar-wrapper">
       <div className="calendar-border">
@@ -112,7 +117,7 @@ function Calendar() {
               center: "title",
               right: "dayGridMonth, dayGridWeek, dayGridDay, listYear",
             }}
-            events={todos.map((t) => t)}
+            events={todos}
           />
         </div>
       </div>
@@ -121,7 +126,6 @@ function Calendar() {
       )}
       {openRemoveTodo && date && (
         <RemoveTodo
-          todoTitle={todoTitle}
           date={todo.date}
           todo={todo}
           closeRemoveTodo={setOpenRemoveTodo}
@@ -129,7 +133,6 @@ function Calendar() {
           toggleCompleteTodo={toggleCompleteTodo}
         />
       )}
-      <FetchApi />
     </div>
   );
 }

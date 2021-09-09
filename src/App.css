@@ -31,3 +31,8 @@
   border-radius: 70px;
   margin-top: 1%;
 }
+
+.fc .fc-bg-event {
+  color: black;
+  background-color: pink !important ;
+}
