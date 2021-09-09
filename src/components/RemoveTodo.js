@@ -12,7 +12,6 @@ const RemoveTodo = ({
 }) => {
   const deleteTodo = () => {
     removeTodo(todo);
-    //console.log(todoTitle);
     closeRemoveTodo(false);
   };
 

@@ -7,6 +7,7 @@ import AddTodo from "./AddTodo";
 import RemoveTodo from "./RemoveTodo";
 
 import { v4 as uuidv4 } from "uuid";
+import FetchApi from "./FetchApi";
 
 function Calendar() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
@@ -27,7 +28,6 @@ function Calendar() {
   const [todo, setTodo] = useState({});
   const [date, setDate] = useState("");
   const [openRemoveTodo, setOpenRemoveTodo] = useState(false);
-  const [todoDate, setTodoDate] = useState("");
   const [todoTitle, setTodoTitle] = useState("");
 
   useEffect(() => {
@@ -43,9 +43,6 @@ function Calendar() {
     todo.complete
       ? (eventInfo.backgroundColor = "green")
       : (eventInfo.backgroundColor = "blue");
-
-    //console.log(eventInfo);
-    //console.log(todo);
   };
 
   const saveTodosToLocalStorage = () => {
@@ -104,8 +101,6 @@ function Calendar() {
             eventClick={(e) => {
               const td = todos.find((t) => t.id === e.event._def.publicId);
               setTodo(td);
-              //setTodoTitle(td[0].title);
-              //setTodoDate(td[0].date);
               setOpenRemoveTodo(true);
             }}
             eventContent={renderEventContent}
@@ -134,6 +129,7 @@ function Calendar() {
           toggleCompleteTodo={toggleCompleteTodo}
         />
       )}
+      <FetchApi />
     </div>
   );
 }
