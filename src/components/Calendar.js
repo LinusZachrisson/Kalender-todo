@@ -34,13 +34,11 @@ function Calendar() {
       { title: e, date: date, complete: false, id: uuidv4() },
     ];
     setTodos(newTodos);
-    console.log("added todo:", newTodos);
   };
 
   const removeTodo = (e) => {
     const newTodos = todos.filter((t) => t.id !== e.id);
     setTodos(newTodos);
-    console.log(e);
   };
 
   const toggleCompleteTodo = (e) => {
@@ -54,8 +52,6 @@ function Calendar() {
       return todo;
     });
     setTodos(updatedTodos);
-    console.log(updatedTodos);
-    console.log(e);
   };
 
   const fetchHolidays = () => {
@@ -72,7 +68,6 @@ function Calendar() {
 
   const holiday = (dag) => {
     const holidays = dag.filter((dag) => dag.helgdag);
-    console.log("holidays", holidays);
 
     const specialDays = [];
 
@@ -86,8 +81,6 @@ function Calendar() {
     );
 
     const specialEventsDisplay = [...todos, ...specialDays];
-
-    console.log(specialDays);
 
     setTodos(specialEventsDisplay);
   };
