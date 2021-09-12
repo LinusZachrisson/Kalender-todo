@@ -1,5 +1,5 @@
 //import { eventTupleToStore } from "@fullcalendar/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./addTodo.css";
 import "./removeTodo.css";
 

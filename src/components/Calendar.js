@@ -59,7 +59,7 @@ function Calendar() {
   };
 
   const fetchHolidays = () => {
-    fetch(`http://sholiday.faboul.se/dagar/v2.1/2021`)
+    fetch(`https://sholiday.faboul.se/dagar/v2.1/2021`)
       .then((response) => response.json())
       .then((data) => {
         holiday(data.dagar);
@@ -82,7 +82,6 @@ function Calendar() {
         date: x.datum,
         id: uuidv4(),
         display: "background",
-        color: "red",
       })
     );
 
